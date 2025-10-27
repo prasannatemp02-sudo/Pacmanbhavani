@@ -1,0 +1,144 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: black;
+    font-family: 'Arial', sans-serif;
+    color: white;
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+}
+
+.header {
+    width: 560px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: white;
+}
+
+.score-info {
+    display: flex;
+    gap: 40px;
+}
+
+.status {
+    color: yellow;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+#game-board {
+    width: 560px;
+    height: 620px;
+    display: grid;
+    grid-template-columns: repeat(28, 20px);
+    grid-template-rows: repeat(31, 20px);
+    background-color: black;
+    position: relative;
+}
+
+.wall {
+    background-color: #2121ff;
+    border-radius: 1px;
+}
+
+.dot {
+    position: relative;
+}
+
+.dot::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background-color: #ffb897;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.pacman {
+    width: 20px;
+    height: 20px;
+    background-color: #ffff00;
+    border-radius: 50%;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 60%, 40% 50%, 0 40%);
+    animation: chomp 0.3s linear infinite;
+}
+
+@keyframes chomp {
+    0% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 60%, 40% 50%, 0 40%); }
+    50% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 51%, 0 50%, 0 49%); }
+    100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 60%, 40% 50%, 0 40%); }
+}
+
+.pacman.right { transform: rotate(0deg); }
+.pacman.left { transform: rotate(180deg); }
+.pacman.up { transform: rotate(270deg); }
+.pacman.down { transform: rotate(90deg); }
+
+.ghost {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 10px 10px 0 0;
+    position: relative;
+}
+
+.ghost::before {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    top: 6px;
+    left: 4px;
+    box-shadow: 8px 0 0 white;
+}
+
+.ghost::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 4px;
+    bottom: 0;
+    left: 0;
+    background: radial-gradient(
+        circle at 2px 0,
+        transparent 2px,
+        red 2px 4px,
+        transparent 4px
+    ) repeat-x;
+    background-size: 4px 4px;
+}
+
+.frightened {
+    background-color: blue !important;
+    animation: flash 0.4s infinite;
+}
+
+@keyframes flash {
+    0%, 100% { background-color: blue; }
+    50% { background-color: white; }
+}
